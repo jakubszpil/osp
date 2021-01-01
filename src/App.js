@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container, Row, Col, Card, Jumbotron } from 'react-bootstrap';
+import List from './components/List/List';
+import StatusGroup from './components/StatusGroup/StatusGroup';
+import useAPI from './utils/useAPI';
 
-function App() {
+const API_ENDPOINT = process.env.NODE_ENV === 'development' ? 'http://localhost/osp/public' : '';
+
+const ColProps = {
+  xs: 12,
+  sm: 12,
+  md: 6,
+  lg: 6,
+  xl: 3,
+  className: 'mb-4',
+};
+
+export default function App() {
+  const data = useAPI(`${API_ENDPOINT}/api/users/`, {}, 15000);
+  const statusLabels = ['Dostępny', 'Niedostępny', 'Wydłużony', 'Mobilny'];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <main>
+        <Container fluid>
+          <Row>
+            <Col xs={12}>
+              <h2 className="my-5">Podgląd statusów</h2>
+            </Col>
+          </Row>
+          <Row className="my-5">
+            {statusLabels.map((statusLabel, key) => (
+              <Col {...ColProps} key={key}>
+                <StatusGroup label={statusLabel} statusCode={key} items={data?.users} />
+              </Col>
+            ))}
+          </Row>
+
+          <Row>
+            <Col xs={12}>
+              <Jumbotron fluid>
+                <Container>
+                  <h2>Dostępność</h2>
+                  <p className="mt-4 h2 font-weight-normal">
+                    Jest dostępnych <b>{data?.available?.all}</b> strazaków w tym: <br />
+                    <b>{data?.available?.drivers} </b> kierowców <br /> <b>{data?.available?.rescuers}</b> ratowników
+                  </p>
+                </Container>
+              </Jumbotron>
+            </Col>
+          </Row>
+        </Container>
+      </main>
+    </>
   );
 }
-
-export default App;
