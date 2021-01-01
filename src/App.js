@@ -1,9 +1,8 @@
 import { Container, Row, Col, Card, Jumbotron } from 'react-bootstrap';
-import List from './components/List/List';
 import StatusGroup from './components/StatusGroup/StatusGroup';
 import useAPI from './utils/useAPI';
 
-const API_ENDPOINT = process.env.NODE_ENV === 'development' ? 'http://localhost/osp/public' : '';
+const API_ENDPOINT = process.env.NODE_ENV === 'development' ? 'http://localhost/osp/public' : process.env.PUBLIC_URL;
 
 const ColProps = {
   xs: 12,
@@ -17,7 +16,7 @@ const ColProps = {
 export default function App() {
   const data = useAPI(`${API_ENDPOINT}/api/users/`, {}, 15000);
   const statusLabels = ['Dostępny', 'Niedostępny', 'Wydłużony', 'Mobilny'];
-
+  console.log(process.env.PUBLIC_URL);
   return (
     <>
       <main>
