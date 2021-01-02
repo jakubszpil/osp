@@ -13,7 +13,7 @@ function ListItem({ item }) {
         </div>
         <div className="ml-auto position-relative">
           <span className="h6 font-weight-normal mr-3">
-            {item.last_update.split(' ')[0].slice(5).split('-').join('/')} {item.last_update.split(' ')[1].slice(0, 5)}
+            {item?.last_update?.split(' ')[0].slice(5).split('-').join('/')} {item?.last_update?.split(' ')[1].slice(0, 5)}
           </span>
           <img {...iconProps} src="fireman.png" alt={'fireman' + item.id} />
           {Number(item.ratownik) === 1 && <img {...iconProps} src="rescuer.png" alt={'rescuer' + item.id} />}
