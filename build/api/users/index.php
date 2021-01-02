@@ -37,11 +37,11 @@
   
   $data = [];
 
-  $data["users"] = getData("SELECT id, name, surname, strazak, ratownik, kierowca, status FROM users WHERE strazak = 1");
+  $data["users"] = getData("SELECT id, name, surname, strazak, ratownik, kierowca, last_update, status FROM users WHERE strazak = 1");
   $data["available"] = [
-    "all" => getData("SELECT count(id) as amount FROM users WHERE strazak = 1 AND status = 0"),
-    "drivers" => getData("SELECT count(id) as amount FROM users WHERE kierowca = 1 AND status = 0"),
-    "rescuers" => getData("SELECT count(id) as amount FROM users WHERE ratownik = 1 AND status = 0"),
+    "all" => getData("SELECT count(id) as amount FROM users WHERE strazak = 1 AND (status = 0 OR status = 2)"),
+    "drivers" => getData("SELECT count(id) as amount FROM users WHERE kierowca = 1 AND (status = 0 OR status = 2)"),
+    "rescuers" => getData("SELECT count(id) as amount FROM users WHERE ratownik = 1 AND (status = 0 OR status = 2)"),
   ];
   $connection->close();
 

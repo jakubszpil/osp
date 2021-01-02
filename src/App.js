@@ -16,7 +16,6 @@ const ColProps = {
 export default function App() {
   const data = useAPI(`${API_ENDPOINT}/api/users/`, {}, 15000);
   const statusLabels = ['Dostępny', 'Niedostępny', 'Wydłużony', 'Mobilny'];
-  console.log(process.env.PUBLIC_URL);
   return (
     <>
       <main>
